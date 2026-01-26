@@ -1,20 +1,59 @@
-<h1 class="text-2xl font-bold mb-4">Dashboard</h1>
+<h1 class="text-2xl font-bold mb-6">Dashboard</h1>
 
 <div class="grid md:grid-cols-2 gap-6">
-    <div class="bg-white p-6 rounded-xl shadow">
-        <h2 class="font-semibold mb-2">Products</h2>
-        <p class="text-gray-600 mb-4">
-            Manage your products and pricing.
-        </p>
-        <a [routerLink]="['/products']" class="text-blue-600 hover:underline">
-            Go to Products →
-        </a>
+    <!-- PRODUCTS -->
+    <div class="bg-white rounded-2xl shadow p-6">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h2 class="font-semibold text-lg">Products</h2>
+                <p class="text-sm text-gray-500">
+                    Manage your catalog
+                </p>
+            </div>
+
+            <a [routerLink]="['/products']" class="text-sm text-blue-600 hover:underline">
+                View →
+            </a>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-500 text-sm mb-1">
+                    Total Products
+                </p>
+                <p class="text-xl font-bold">
+                    {{ productsCount() }}
+                </p>
+
+                <p class="text-gray-500 text-sm mt-4">
+                    Total Value
+                </p>
+                <p class="font-semibold">
+                    {{ productsTotal() }} EGP
+                </p>
+            </div>
+
+            <div class="w-36 h-36">
+                <canvas id="productsChart"></canvas>
+            </div>
+        </div>
     </div>
 
-    <div class="bg-white p-6 rounded-xl shadow opacity-50">
-        <h2 class="font-semibold mb-2">Invoices</h2>
-        <p class="text-gray-600">
-            (Coming next)
+    <!-- INVOICES -->
+    <div class="bg-white rounded-2xl shadow p-6">
+        <div class="mb-6">
+            <h2 class="font-semibold text-lg">Invoices</h2>
+            <p class="text-sm text-gray-500">
+                Sales overview (coming soon)
+            </p>
+        </div>
+
+        <div class="h-40">
+            <canvas id="invoicesChart"></canvas>
+        </div>
+
+        <p class="text-xs text-gray-400 mt-4">
+            Invoices module will be added in the next step
         </p>
     </div>
 </div>
