@@ -1,66 +1,59 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
-import { LocalStorageService } from './local-storage';
+import { Injectable, computed, signal } from '@angular/core';
 import { AuthUser } from '../../shared/models/auth-user';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
+  private readonly TOKEN_KEY = 'rmg_auth_token';
+  private readonly USER_KEY = 'rmg_auth_user';
+  private readonly REMEMBER_KEY = 'rmg_remember_me';
 
-  // ============================
-  // DEPENDENCIES
-  // ============================
-  private readonly localStorage = inject(LocalStorageService);
-
-  // ============================
-  // CONSTANTS
-  // ============================
-  private readonly TOKEN_KEY = 'token';
-
-  // ============================
-  // TOKEN STATE
-  // ============================
-  private tokenSignal = signal<string | null>(this.getToken());
-
-  private getToken(): string | null {
-    return this.localStorage.get<string>(this.TOKEN_KEY);
-  }
+  private tokenSignal = signal<string | null>(this.getStoredToken());
+  private userSignal = signal<AuthUser | null>(this.getStoredUser());
 
   token = computed(() => this.tokenSignal());
+  user = computed(() => this.userSignal());
+  isAuthenticated = computed(() => !!this.tokenSignal());
+
+  private getStoredToken(): string | null {
+    return sessionStorage.getItem(this.TOKEN_KEY) ||
+      localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  private getStoredUser(): AuthUser | null {
+    const user =
+      sessionStorage.getItem(this.USER_KEY) ||
+      localStorage.getItem(this.USER_KEY);
+    return user ? JSON.parse(user) : null;
+  }
 
   setToken(token: string): void {
-    if (!token) return;
-
-    this.localStorage.set(this.TOKEN_KEY, token);
+    const storage = this.shouldRemember() ? localStorage : sessionStorage;
+    storage.setItem(this.TOKEN_KEY, token);
     this.tokenSignal.set(token);
   }
 
-  removeToken(): void {
-    this.localStorage.remove(this.TOKEN_KEY);
-    this.tokenSignal.set(null);
-  }
-
-  // ============================
-  // USER STATE
-  // ============================
-  private userSignal = signal<AuthUser | null>(null);
-
-  user = computed(() => this.userSignal());
-
   setUser(user: AuthUser): void {
+    const storage = this.shouldRemember() ? localStorage : sessionStorage;
+    storage.setItem(this.USER_KEY, JSON.stringify(user));
     this.userSignal.set(user);
   }
 
-  // ============================
-  // AUTH STATUS
-  // ============================
-  isAuthenticated = computed(() => !!this.tokenSignal());
+  setRememberMe(remember: boolean): void {
+    remember
+      ? localStorage.setItem(this.REMEMBER_KEY, 'true')
+      : localStorage.removeItem(this.REMEMBER_KEY);
+  }
 
-  // ============================
-  // LOGOUT
-  // ============================
+  private shouldRemember(): boolean {
+    return localStorage.getItem(this.REMEMBER_KEY) === 'true';
+  }
+
   logout(): void {
-    this.removeToken();
+    sessionStorage.clear();
+    localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.USER_KEY);
+    localStorage.removeItem(this.REMEMBER_KEY);
+    this.tokenSignal.set(null);
     this.userSignal.set(null);
   }
 }

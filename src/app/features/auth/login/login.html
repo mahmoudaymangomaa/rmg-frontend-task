@@ -1,1 +1,227 @@
-<p>login works!</p>
+<div class="min-h-screen grid lg:grid-cols-2 bg-gradient-to-br from-gray-50 to-gray-100">
+    <!-- Left Side - Branding -->
+    <div
+        class="hidden lg:flex flex-col justify-center items-start px-16 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white relative overflow-hidden">
+        <!-- Decorative circles -->
+        <div class="absolute top-20 right-20 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 left-20 w-96 h-96 bg-white opacity-5 rounded-full blur-3xl"></div>
+
+        <div class="relative z-10">
+            <div class="mb-8">
+                <div
+                    class="w-16 h-16 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center mb-6 backdrop-blur-sm">
+                    <div class="w-10 h-10 bg-white rounded-xl"></div>
+                </div>
+                <h1 class="text-5xl font-bold mb-4 leading-tight">
+                    RMG Dashboard
+                </h1>
+                <div class="w-20 h-1 bg-blue-300 mb-6"></div>
+                <p class="text-xl text-blue-100 leading-relaxed max-w-md">
+                    Manage products, invoices, and business workflows from one secure platform.
+                </p>
+            </div>
+
+            <div class="mt-12 space-y-4">
+                <div class="flex items-center gap-3 text-blue-100">
+                    <div class="w-8 h-8 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <span>Secure & encrypted data</span>
+                </div>
+                <div class="flex items-center gap-3 text-blue-100">
+                    <div class="w-8 h-8 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <span>Real-time analytics</span>
+                </div>
+                <div class="flex items-center gap-3 text-blue-100">
+                    <div class="w-8 h-8 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <span>24/7 support</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Side - Login Form -->
+    <div class="flex items-center justify-center px-4 py-12">
+        <div class="w-full max-w-md">
+            <!-- Mobile Logo -->
+            <div class="lg:hidden mb-8 text-center">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">RMG Dashboard</h1>
+                <p class="text-gray-500">Sign in to continue</p>
+            </div>
+
+            <!-- Login Card -->
+            <div class="bg-white rounded-3xl shadow-2xl shadow-gray-200 p-8 sm:p-10 border border-gray-100">
+                <!-- Header -->
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">
+                        Welcome Back
+                    </h2>
+                    <p class="text-gray-500">
+                        Enter your credentials to access your account
+                    </p>
+                </div>
+
+                <!-- Form -->
+                <div class="space-y-5">
+                    <!-- Email Field -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Email Address
+                        </label>
+                        <div class="relative">
+                            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <input type="email" [value]="email()" (input)="onEmailChange($any($event.target).value)"
+                                placeholder="admin@test.com"
+                                [class]="'w-full pl-12 pr-4 py-3.5 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-100 ' + 
+                  (showEmailError() ? 'border-red-500 focus:border-red-500' : 'border-gray-200 focus:border-blue-500')" />
+                        </div>
+                        @if (showEmailError()) {
+                        <div class="flex items-center gap-1 mt-2 text-red-500 text-xs">
+                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span>Please enter a valid email address</span>
+                        </div>
+                        }
+                    </div>
+
+                    <!-- Password Field -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Password
+                        </label>
+                        <div class="relative">
+                            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                            </div>
+                            <input [type]="showPassword() ? 'text' : 'password'" [value]="password()"
+                                (input)="onPasswordChange($any($event.target).value)" (keypress)="onKeyPress($event)"
+                                placeholder="Enter your password"
+                                class="w-full pl-12 pr-12 py-3.5 rounded-xl border-2 border-gray-200 transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100" />
+                            <button type="button" (click)="togglePasswordVisibility()"
+                                class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
+                                @if (showPassword()) {
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                                </svg>
+                                } @else {
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                }
+                            </button>
+                        </div>
+                        @if (showPasswordHint()) {
+                        <p class="mt-2 text-xs text-gray-500">
+                            Password must be at least 6 characters
+                        </p>
+                        }
+                    </div>
+
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center gap-2 cursor-pointer group">
+                            <input type="checkbox" [checked]="rememberMe()"
+                                (change)="onRememberMeChange($any($event.target).checked)"
+                                class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 cursor-pointer" />
+                            <span class="text-sm text-gray-600 group-hover:text-gray-800 transition-colors">
+                                Remember me
+                            </span>
+                        </label>
+                        <button type="button" (click)="navigateToForgotPassword()"
+                            class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                            Forgot password?
+                        </button>
+                    </div>
+
+                    <!-- Error Message -->
+                    @if (error()) {
+                    <div
+                        class="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm animate-shake">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span>{{ error() }}</span>
+                    </div>
+                    }
+
+                    <!-- Submit Button -->
+                    <button (click)="submit()" [disabled]="!isFormValid() || loading()" [class]="'w-full py-4 rounded-xl font-semibold text-white transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-100 transform ' +
+              (isFormValid() && !loading() 
+                ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 hover:shadow-lg hover:shadow-blue-200 hover:-translate-y-0.5 active:translate-y-0' 
+                : 'bg-gray-300 cursor-not-allowed')">
+                        @if (loading()) {
+                        <span class="flex items-center justify-center gap-2">
+                            <svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                            Signing in...
+                        </span>
+                        } @else {
+                        Sign In
+                        }
+                    </button>
+                </div>
+
+                <!-- Demo Credentials -->
+                <div class="mt-6 p-4 bg-blue-50 rounded-xl border border-blue-100">
+                    <p class="text-xs font-semibold text-blue-800 mb-2">🔐 Demo Credentials:</p>
+                    <p class="text-xs text-blue-600">Email: admin&#64;test.com</p>
+                    <p class="text-xs text-blue-600">Password: 123456</p>
+                </div>
+
+                <!-- Sign Up Link -->
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">
+                        Don't have an account?
+                        <button (click)="navigateToSignup()"
+                            class="font-semibold text-blue-600 hover:text-blue-700 transition-colors ml-1">
+                            Sign up
+                        </button>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <p class="text-center text-xs text-gray-500 mt-6">
+                © 2026 RMG Dashboard. All rights reserved.
+            </p>
+        </div>
+    </div>
+</div>
