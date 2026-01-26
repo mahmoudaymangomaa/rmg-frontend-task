@@ -34,6 +34,25 @@ export default class ProductsComponent {
   description = signal('');
 
   // =====================
+  // VALIDATION
+  // =====================
+  private readonly TEXT_REGEX =
+    /^(?=.*[a-zA-Z\u0600-\u06FF]).+$/;
+
+  isNameValid = () =>
+    this.TEXT_REGEX.test(this.name());
+
+  isDescriptionValid = () =>
+    !this.description() ||
+    this.TEXT_REGEX.test(this.description());
+
+  isFormValid = () =>
+    !!this.name() &&
+    !!this.price() &&
+    this.isNameValid() &&
+    this.isDescriptionValid();
+
+  // =====================
   // LIFECYCLE
   // =====================
   ngOnInit(): void {
@@ -58,14 +77,20 @@ export default class ProductsComponent {
   // SAVE (ADD / EDIT)
   // =====================
   save(): void {
-    if (!this.name() || !this.price()) return;
+    if (!this.isFormValid()) {
+      this.error.set(
+        'Please enter a valid product name and description'
+      );
+      return;
+    }
 
     this.loading.set(true);
+    this.error.set(null);
 
     const payload: Product = {
-      name: this.name(),
+      name: this.name().trim(),
       price: this.price()!,
-      description: this.description(),
+      description: this.description().trim(),
     };
 
     const request$ = this.editingId()
@@ -90,6 +115,7 @@ export default class ProductsComponent {
     this.name.set(product.name);
     this.price.set(product.price);
     this.description.set(product.description || '');
+    this.error.set(null);
   }
 
   // =====================
@@ -115,5 +141,6 @@ export default class ProductsComponent {
     this.name.set('');
     this.price.set(null);
     this.description.set('');
+    this.error.set(null);
   }
 }
