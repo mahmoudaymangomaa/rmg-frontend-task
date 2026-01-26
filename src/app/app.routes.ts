@@ -21,7 +21,7 @@ export const routes: Routes = [
             {
                 path: 'products',
                 loadComponent: () =>
-                    import('./features/products/products/products')
+                    import('./features/products/component/products')
             }
         ]
     },

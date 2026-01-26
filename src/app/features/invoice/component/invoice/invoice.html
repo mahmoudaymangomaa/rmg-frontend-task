@@ -1,0 +1,55 @@
+<h1 class="text-2xl font-bold mb-6">Create Invoice</h1>
+
+<div class="bg-white rounded-xl shadow p-6 mb-8">
+    <input class="border rounded-lg px-3 py-2 w-full mb-4" placeholder="Customer name" [value]="customerName()"
+        (input)="customerName.set($any($event.target).value)" />
+
+    <h3 class="font-semibold mb-2">Products</h3>
+
+    <div class="flex flex-wrap gap-2 mb-6">
+        <button *ngFor="let p of products()" (click)="addProduct(p)"
+            class="px-3 py-1 rounded-lg border hover:bg-gray-100 text-sm">
+            {{ p.name }}
+        </button>
+    </div>
+
+    <div *ngIf="items().length">
+        <table class="w-full text-sm mb-4">
+            <thead class="text-gray-500 border-b">
+                <tr>
+                    <th class="text-left py-2">Item</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let i of items()" class="border-b">
+                    <td class="py-2">{{ i.name }}</td>
+                    <td>
+                        <input type="number" min="1" class="border rounded w-16 px-2" [value]="i.quantity"
+                            (input)="updateQty(i, +$any($event.target).value)" />
+                    </td>
+                    <td>{{ i.total }} EGP</td>
+                    <td>
+                        <button (click)="removeItem(i.productId)" class="text-red-600 text-xs">
+                            Remove
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="text-right space-y-1">
+            <p>Subtotal: <strong>{{ subtotal }} EGP</strong></p>
+            <p>Tax (14%): <strong>{{ tax }} EGP</strong></p>
+            <p class="text-lg">
+                Total: <strong>{{ grandTotal }} EGP</strong>
+            </p>
+        </div>
+
+        <button (click)="saveInvoice()" class="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg">
+            Save Invoice
+        </button>
+    </div>
+</div>
