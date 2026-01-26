@@ -1,0 +1,27 @@
+<h1 class="text-xl font-bold mb-4">Products</h1>
+
+<div class="bg-white p-4 rounded shadow mb-6">
+    <div class="flex gap-3">
+        <input class="border rounded px-3 py-2 flex-1" placeholder="Product name" [value]="name()"
+            (input)="name.set($any($event.target).value)" />
+
+        <input type="number" class="border rounded px-3 py-2 w-32" placeholder="Price" [value]="price()"
+            (input)="price.set(+$any($event.target).value)" />
+
+        <button (click)="add()" class="bg-blue-600 text-white px-4 rounded">
+            Add
+        </button>
+    </div>
+</div>
+
+<div class="bg-white rounded shadow divide-y">
+    <div *ngFor="let p of products()" class="flex justify-between items-center p-4">
+        <div>
+            <strong>{{ p.name }}</strong>
+            <span class="text-gray-500">— {{ p.price }} EGP</span>
+        </div>
+        <button (click)="remove(p.id!)" class="text-red-600 hover:underline">
+            Delete
+        </button>
+    </div>
+</div>

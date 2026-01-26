@@ -11,20 +11,20 @@ export const routes: Routes = [
         path: '',
         canActivate: [authGuard],
         loadComponent: () =>
-            import('./features/home/home/home')
+            import('./features/shell/layout/layout'),
+        children: [
+            {
+                path: '',
+                loadComponent: () =>
+                    import('./features/home/home/home')
+            },
+            {
+                path: 'products',
+                loadComponent: () =>
+                    import('./features/products/products/products')
+            }
+        ]
     },
-    //   {
-    //     path: 'products',
-    //     canActivate: [authGuard],
-    //     loadChildren: () =>
-    //       import('./features/products/products.routes')
-    //   },
-    //   {
-    //     path: 'invoices',
-    //     canActivate: [authGuard],
-    //     loadChildren: () =>
-    //       import('./features/invoices/invoices.routes')
-    //   },
     { path: '**', redirectTo: '' }
 
 ];
