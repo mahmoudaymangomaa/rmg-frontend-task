@@ -22,6 +22,11 @@ export const routes: Routes = [
                 path: 'products',
                 loadComponent: () =>
                     import('./features/products/component/products')
+            },
+            {
+                path: 'invoice',
+                loadComponent: () =>
+                    import('./features/invoice/component/invoice/invoice')
             }
         ]
     },
