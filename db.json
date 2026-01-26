@@ -1,43 +1,48 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "name": "Admin User",
-            "email": "admin@test.com",
-            "password": "123456"
-        }
-    ],
-    "login": [
-        {
-            "id": "c0e4",
-            "email": "admin@test.com",
-            "password": "123456"
-        },
-        {
-            "id": "3ca9",
-            "email": "admin@test.com",
-            "password": "123456"
-        },
-        {
-            "id": "df03",
-            "email": "admin@test.com",
-            "password": "123456"
-        },
-        {
-            "id": "ff56",
-            "email": "admin@test.com",
-            "password": "123456"
-        },
-        {
-            "id": "7d98",
-            "email": "admin@test.com",
-            "password": "123456"
-        },
-        {
-            "id": "82e9",
-            "email": "admin@test.com",
-            "password": "123456"
-        }
-    ],
-    "products": []
+  "users": [
+    {
+      "id": 1,
+      "name": "Admin User",
+      "email": "admin@test.com",
+      "password": "123456"
+    }
+  ],
+  "login": [
+    {
+      "id": "c0e4",
+      "email": "admin@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "3ca9",
+      "email": "admin@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "df03",
+      "email": "admin@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "ff56",
+      "email": "admin@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "7d98",
+      "email": "admin@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "82e9",
+      "email": "admin@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "570e",
+      "email": "admin@test.com",
+      "password": "123456"
+    }
+  ],
+  "products": []
 }
