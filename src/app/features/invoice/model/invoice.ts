@@ -1,5 +1,5 @@
 export interface InvoiceItem {
-    productId: number;
+    productId: string;
     name: string;
     price: number;
     quantity: number;
@@ -7,7 +7,7 @@ export interface InvoiceItem {
 }
 
 export interface Invoice {
-    id?: number;
+    id?: string;
     customerName: string;
     date: string;
     items: InvoiceItem[];

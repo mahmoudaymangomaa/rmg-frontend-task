@@ -28,7 +28,7 @@ export default class ProductsComponent {
   // =====================
   // FORM
   // =====================
-  editingId = signal<number | null>(null);
+  editingId = signal<string | null>(null); // ✅ string
   name = signal('');
   price = signal<number | null>(null);
   description = signal('');
@@ -94,7 +94,7 @@ export default class ProductsComponent {
     };
 
     const request$ = this.editingId()
-      ? this.api.update(this.editingId()!, payload)
+      ? this.api.update(this.editingId()!, payload) // ✅ string
       : this.api.create(payload);
 
     request$.subscribe({
@@ -111,7 +111,9 @@ export default class ProductsComponent {
   // EDIT
   // =====================
   edit(product: Product): void {
-    this.editingId.set(product.id!);
+    if (!product.id) return;
+
+    this.editingId.set(product.id); // ✅ string
     this.name.set(product.name);
     this.price.set(product.price);
     this.description.set(product.description || '');
@@ -121,7 +123,7 @@ export default class ProductsComponent {
   // =====================
   // DELETE
   // =====================
-  remove(id: number): void {
+  remove(id: string): void { // ✅ string
     if (!confirm('Delete this product?')) return;
 
     this.loading.set(true);

@@ -16,11 +16,11 @@ export class ProductsService {
     return this.http.post<Product>(this.API_URL, product);
   }
 
-  update(id: number, product: Product): Observable<Product> {
+  update(id: string, product: Product): Observable<Product> {
     return this.http.put<Product>(`${this.API_URL}/${id}`, product);
   }
 
-  delete(id: number): Observable<void> {
+  delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.API_URL}/${id}`);
   }
 }

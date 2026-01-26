@@ -24,14 +24,23 @@ export default class InvoicesComponent {
   products = signal<Product[]>([]);
   items = signal<InvoiceItem[]>([]);
   customerName = signal('');
+  error = signal<string | null>(null);
+
   taxRate = 0.14;
 
   ngOnInit(): void {
     this.productsApi.getAll().subscribe(p => this.products.set(p));
   }
 
+  // =====================
+  // ADD PRODUCT
+  // =====================
   addProduct(product: Product): void {
-    const existing = this.items().find(i => i.productId === product.id);
+    if (!product.id) return;
+
+    const existing = this.items().find(
+      i => i.productId === product.id
+    );
 
     if (existing) {
       existing.quantity++;
@@ -43,7 +52,7 @@ export default class InvoicesComponent {
     this.items.set([
       ...this.items(),
       {
-        productId: product.id!,
+        productId: product.id,
         name: product.name,
         price: product.price,
         quantity: 1,
@@ -52,16 +61,29 @@ export default class InvoicesComponent {
     ]);
   }
 
+  // =====================
+  // UPDATE QTY
+  // =====================
   updateQty(item: InvoiceItem, qty: number): void {
+    if (qty < 1) return;
+
     item.quantity = qty;
     item.total = qty * item.price;
     this.items.set([...this.items()]);
   }
 
-  removeItem(productId: number): void {
-    this.items.set(this.items().filter(i => i.productId !== productId));
+  // =====================
+  // REMOVE ITEM
+  // =====================
+  removeItem(productId: string): void {
+    this.items.set(
+      this.items().filter(i => i.productId !== productId)
+    );
   }
 
+  // =====================
+  // TOTALS
+  // =====================
   get subtotal(): number {
     return this.items().reduce((s, i) => s + i.total, 0);
   }
@@ -74,8 +96,19 @@ export default class InvoicesComponent {
     return this.subtotal + this.tax;
   }
 
+  // =====================
+  // SAVE
+  // =====================
   saveInvoice(): void {
-    if (!this.customerName() || this.items().length === 0) return;
+    if (!this.customerName()) {
+      this.error.set('Customer name is required');
+      return;
+    }
+
+    if (this.items().length === 0) {
+      this.error.set('Please add at least one product');
+      return;
+    }
 
     const invoice: Invoice = {
       customerName: this.customerName(),
@@ -89,6 +122,7 @@ export default class InvoicesComponent {
     this.invoicesApi.create(invoice).subscribe(() => {
       this.customerName.set('');
       this.items.set([]);
+      this.error.set(null);
       alert('Invoice created successfully');
     });
   }
