@@ -18,36 +18,49 @@ import { ProductsService } from '../services/products';
 export default class ProductsComponent {
   private readonly api = inject(ProductsService);
 
-  // ============================
+  // =====================
   // STATE
-  // ============================
+  // =====================
   products = signal<Product[]>([]);
+  loading = signal(false);
+  error = signal<string | null>(null);
 
+  // =====================
+  // FORM
+  // =====================
+  editingId = signal<number | null>(null);
   name = signal('');
   price = signal<number | null>(null);
   description = signal('');
 
-  editingId = signal<number | null>(null);
-
-  // ============================
+  // =====================
   // LIFECYCLE
-  // ============================
+  // =====================
   ngOnInit(): void {
     this.load();
   }
 
-  // ============================
-  // DATA
-  // ============================
+  // =====================
+  // LOAD
+  // =====================
   load(): void {
-    this.api.getAll().subscribe(p => this.products.set(p));
+    this.loading.set(true);
+    this.error.set(null);
+
+    this.api.getAll().subscribe({
+      next: data => this.products.set(data),
+      error: () => this.error.set('Failed to load products'),
+      complete: () => this.loading.set(false),
+    });
   }
 
-  // ============================
-  // CREATE / UPDATE
-  // ============================
+  // =====================
+  // SAVE (ADD / EDIT)
+  // =====================
   save(): void {
     if (!this.name() || !this.price()) return;
+
+    this.loading.set(true);
 
     const payload: Product = {
       name: this.name(),
@@ -59,30 +72,48 @@ export default class ProductsComponent {
       ? this.api.update(this.editingId()!, payload)
       : this.api.create(payload);
 
-    request$.subscribe(() => {
-      this.resetForm();
-      this.load();
+    request$.subscribe({
+      next: () => {
+        this.resetForm();
+        this.load();
+      },
+      error: () => this.error.set('Failed to save product'),
+      complete: () => this.loading.set(false),
     });
   }
 
+  // =====================
+  // EDIT
+  // =====================
   edit(product: Product): void {
     this.editingId.set(product.id!);
     this.name.set(product.name);
     this.price.set(product.price);
-    this.description.set(product.description ?? '');
+    this.description.set(product.description || '');
   }
 
+  // =====================
+  // DELETE
+  // =====================
   remove(id: number): void {
-    this.api.delete(id).subscribe(() => this.load());
+    if (!confirm('Delete this product?')) return;
+
+    this.loading.set(true);
+
+    this.api.delete(id).subscribe({
+      next: () => this.load(),
+      error: () => this.error.set('Failed to delete product'),
+      complete: () => this.loading.set(false),
+    });
   }
 
-  // ============================
-  // HELPERS
-  // ============================
+  // =====================
+  // RESET
+  // =====================
   resetForm(): void {
+    this.editingId.set(null);
     this.name.set('');
     this.price.set(null);
     this.description.set('');
-    this.editingId.set(null);
   }
 }
