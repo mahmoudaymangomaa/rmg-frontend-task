@@ -1,0 +1,33 @@
+<div class="min-h-screen flex bg-gray-100">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-lg hidden md:block">
+        <div class="p-6 font-bold text-xl border-b">
+            RMG Dashboard
+        </div>
+
+        <nav class="p-4 space-y-2">
+            <a routerLink="/" class="block px-3 py-2 rounded hover:bg-blue-50">
+                Home
+            </a>
+            <a routerLink="/products" class="block px-3 py-2 rounded hover:bg-blue-50">
+                Products
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main -->
+    <div class="flex-1 flex flex-col">
+        <!-- Header -->
+        <header class="h-14 bg-white shadow flex items-center justify-between px-6">
+            <span class="font-medium">Welcome</span>
+            <button (click)="logout()" class="text-sm text-red-600 hover:underline">
+                Logout
+            </button>
+        </header>
+
+        <!-- Content -->
+        <main class="p-6 flex-1">
+            <router-outlet />
+        </main>
+    </div>
+</div>
