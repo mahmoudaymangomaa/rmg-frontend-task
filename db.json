@@ -44,5 +44,12 @@
       "password": "123456"
     }
   ],
-  "products": []
+  "products": [
+    {
+      "id": "e268",
+      "name": "Rmg",
+      "price": 500,
+      "description": "Rmg"
+    }
+  ]
 }
