@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Admin User",
       "email": "admin@test.com",
       "password": "123456"
@@ -42,6 +42,16 @@
       "id": "570e",
       "email": "admin@test.com",
       "password": "123456"
+    },
+    {
+      "id": "e129",
+      "email": "admin@test.com",
+      "password": "test@nasps"
+    },
+    {
+      "id": "2f39",
+      "email": "admin@test.com",
+      "password": "123456"
     }
   ],
   "products": [
@@ -58,11 +68,43 @@
       "description": "4324"
     },
     {
-      "name": "214RWE",
-      "price": 423,
-      "description": "432REF",
+      "name": "214RWE1",
+      "price": 4231,
+      "description": "432REF1",
       "id": "4749"
     }
   ],
-  "invoices": []
+  "invoices": [
+    {
+      "id": "5406",
+      "customerName": "RMG",
+      "date": "2026-01-27T00:41:41.334Z",
+      "items": [
+        {
+          "productId": "e268",
+          "name": "Rmg",
+          "price": 500,
+          "quantity": 1,
+          "total": 500
+        },
+        {
+          "productId": "10d0",
+          "name": "rmg",
+          "price": 234,
+          "quantity": 1,
+          "total": 234
+        },
+        {
+          "productId": "4749",
+          "name": "214RWE1",
+          "price": 4231,
+          "quantity": 1,
+          "total": 4231
+        }
+      ],
+      "subtotal": 4965,
+      "tax": 695.1,
+      "grandTotal": 5660.1
+    }
+  ]
 }

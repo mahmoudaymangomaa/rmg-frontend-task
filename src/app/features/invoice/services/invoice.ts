@@ -15,5 +15,9 @@ export class InvoicesService {
   create(invoice: Invoice): Observable<Invoice> {
     return this.http.post<Invoice>(this.API_URL, invoice);
   }
+
+  delete(id: string) {
+    return this.http.delete(`${this.API_URL}/${id}`);
+  }
 }
 
