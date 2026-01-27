@@ -52,6 +52,11 @@
       "id": "2f39",
       "email": "admin@test.com",
       "password": "123456"
+    },
+    {
+      "id": "6485",
+      "email": "admin@test.com",
+      "password": "123456"
     }
   ],
   "products": [
