@@ -1,9 +1,15 @@
 <div class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-semibold">Invoice Details</h1>
 
-    <a routerLink="/invoices" class="text-sm text-blue-600 hover:underline">
-        ← Back to Invoices
-    </a>
+    <div class="flex gap-3">
+        <a routerLink="/invoices" class="text-sm text-blue-600 hover:underline">
+            ← Back to Invoices
+        </a>
+
+        <button (click)="exportPDF()" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm" *ngIf="invoice()">
+            Export PDF
+        </button>
+    </div>
 </div>
 
 <!-- Error -->
@@ -16,8 +22,8 @@
     Loading invoice...
 </div>
 
-<!-- Invoice -->
-<div *ngIf="!loading() && invoice()" class="bg-white rounded-xl shadow p-6">
+<!-- Invoice PDF AREA -->
+<div *ngIf="!loading() && invoice()" id="invoice-pdf" class="bg-white rounded-xl shadow p-6">
     <!-- Header -->
     <div class="flex justify-between mb-6">
         <div>
@@ -42,9 +48,9 @@
         <thead class="bg-gray-50 text-gray-600">
             <tr>
                 <th class="text-left px-3 py-2">Item</th>
-                <th>Qty</th>
-                <th>Price</th>
-                <th>Total</th>
+                <th class="text-center">Qty</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">Total</th>
             </tr>
         </thead>
 
@@ -62,8 +68,14 @@
 
     <!-- Summary -->
     <div class="text-right space-y-1">
-        <p>Subtotal: <strong>{{ invoice()!.subtotal }} EGP</strong></p>
-        <p>Tax: <strong>{{ invoice()!.tax }} EGP</strong></p>
+        <p>
+            Subtotal:
+            <strong>{{ invoice()!.subtotal }} EGP</strong>
+        </p>
+        <p>
+            Tax:
+            <strong>{{ invoice()!.tax }} EGP</strong>
+        </p>
         <p class="text-lg">
             Grand Total:
             <strong>{{ invoice()!.grandTotal }} EGP</strong>
