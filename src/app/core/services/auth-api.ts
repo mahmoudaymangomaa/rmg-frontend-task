@@ -17,10 +17,10 @@ export class AuthApiService {
 
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http
-      .post(`${this.appConfig.baseURL}/login`, { email, password })
+      .post(`${this.appConfig.baseURL}login`, { email, password })
       .pipe(
         switchMap(() =>
-          this.http.get<AuthUser[]>(`${this.appConfig.baseURL}/users`)
+          this.http.get<AuthUser[]>(`${this.appConfig.baseURL}users`)
         ),
         map(users => {
           const user = users.find(
