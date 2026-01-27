@@ -1,13 +1,15 @@
 # RMG Frontend Task
 
-A modern **Angular Single Page Application (SPA)** built as a technical assignment to demonstrate **frontend architecture, clean code, and real-world business logic** — **without a real backend**.
+A modern **Angular Single Page Application (SPA)** built as a technical assignment to demonstrate **frontend architecture, clean code, performance optimization, and real-world business logic** — **without a real backend**.
 
-The application simulates a complete workflow for:
+The application simulates a complete business workflow for:
 - Product Management
 - Invoice Creation & Management
 - Dashboard Analytics
 - PDF Export
-- Angular Material was intentionally not used in favor of Tailwind CSS for faster UI iteration and full control over styling.
+
+> **Angular Material was intentionally not used** in favor of **Tailwind CSS** to allow faster UI iteration, full design control, and a modern visual system.
+
 All data interactions are handled using a **Fake REST API (json-server)**.
 
 ---
@@ -16,8 +18,8 @@ All data interactions are handled using a **Fake REST API (json-server)**.
 
 ### 🔐 Authentication
 - Login using fake API (json-server)
-- Route protection using **Auth Guard**
-- Authenticated shell layout (Sidebar + Header)
+- Route protection using **Auth Guards**
+- Authenticated shell layout (Header + Navigation)
 - Clean logout flow
 
 ---
@@ -28,11 +30,11 @@ All data interactions are handled using a **Fake REST API (json-server)**.
   - Read
   - Update
   - Delete
-- Strong validation:
+- Strong validation rules:
   - Product name must contain readable text
   - Prevent numbers-only or symbols-only values
-  - Description validation (optional but readable)
-- Clean UX:
+  - Optional description with readability validation
+- Clean UX states:
   - Loading state
   - Empty state
   - Error handling
@@ -48,12 +50,12 @@ All data interactions are handled using a **Fake REST API (json-server)**.
 ### ➕ Create Invoice
 - Select products dynamically
 - Add the same product multiple times (quantity auto-increment)
-- Update quantities manually
+- Manual quantity updates
 - Automatic calculations:
   - Subtotal
   - Tax (14%)
   - Grand Total
-- Validation:
+- Validation rules:
   - Customer name is required
   - At least one product is required before saving
 - Invoice data persisted to fake API
@@ -78,13 +80,13 @@ All data interactions are handled using a **Fake REST API (json-server)**.
 
 ### 📄 Invoice Details View
 
-The **Invoice Details** page provides a complete, read-only view of a single invoice in a clean and professional layout similar to real accounting systems.
+The **Invoice Details** page provides a clean, professional, read-only view of a single invoice, inspired by real accounting systems.
 
-#### What this page includes:
+#### Included Features:
 
 **Navigation**
 - Back button to return to invoices list
-- Improves user flow and usability
+- Improved user flow and usability
 
 **Invoice Header**
 - Customer name
@@ -98,12 +100,12 @@ The **Invoice Details** page provides a complete, read-only view of a single inv
   - Quantity
   - Unit price
   - Line total
-- Values are calculated dynamically based on stored invoice data
+- Values calculated dynamically based on stored invoice data
 
 **Financial Summary**
-- Subtotal (sum of all item totals)
+- Subtotal
 - Tax (14%)
-- Grand Total (Subtotal + Tax)
+- Grand Total
 
 ---
 
@@ -127,27 +129,50 @@ Initially, `html2canvas` was evaluated, but it failed due to:
 - Invoice header (customer name & date)
 - Items table
 - Subtotal, tax, and grand total
-- Automatically downloaded as:
+- Automatically downloaded PDF file
 
-
-This approach reflects **real-world production practices** and avoids common pitfalls.
+This approach reflects **real-world production practices** and avoids common frontend PDF pitfalls.
 
 ---
 
 ## 📊 Dashboard
 - Real-time statistics connected to fake API:
-- Total Products count
-- Total Products value
-- Invoices overview
-- Interactive and clean charts using **Chart.js**
+  - Total products count
+  - Total products value
+  - Invoices overview
+- Interactive charts using **Chart.js**
 - Quick navigation to:
-- Products
-- Invoices
+  - Products
+  - Invoices
+
+---
+
+## ⚙️ Runtime Configuration
+- Uses a runtime `config.json` file
+- API base URL loaded at application startup using `APP_INITIALIZER`
+- Managed via `AppConfigService`
+- Allows changing API URLs without rebuilding the app
+- Suitable for multi-environment deployment (local / staging / production)
+
+---
+
+## ⚡ Performance Optimizations
+- Standalone Components to reduce bundle size
+- Lazy-loaded feature routes
+- **OnPush Change Detection Strategy**
+- **Angular Signals** to minimize unnecessary re-renders
+- Optimized change detection and rendering flow
+
+---
+
+## 📱 Responsive Design
+- Fully responsive layout (Desktop, Tablet, Mobile)
+- Tailwind CSS used for adaptive spacing, typography, and layout control
+- Mobile-friendly navigation and tables
 
 ---
 
 ## 🛠️ Tech Stack
-
 - **Angular** (Standalone Components)
 - **Angular Signals**
 - **TypeScript**
@@ -171,6 +196,9 @@ This approach reflects **real-world production practices** and avoids common pit
 │   ├── invoice        (create)
 │   ├── invoices       (list)
 │   └── invoices/:id   (details)
+
+
+## 🚀 Getting Started (Local Development)
 
 ### 1️⃣ Clone the repository
 ```bash
