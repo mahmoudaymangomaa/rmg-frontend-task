@@ -7,7 +7,7 @@ The application simulates a complete workflow for:
 - Invoice Creation & Management
 - Dashboard Analytics
 - PDF Export
-
+- Angular Material was intentionally not used in favor of Tailwind CSS for faster UI iteration and full control over styling.
 All data interactions are handled using a **Fake REST API (json-server)**.
 
 ---
