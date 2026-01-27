@@ -19,5 +19,10 @@ export class InvoicesService {
   delete(id: string) {
     return this.http.delete(`${this.API_URL}/${id}`);
   }
+
+  getById(id: string): Observable<Invoice> {
+    return this.http.get<Invoice>(`${this.API_URL}/${id}`);
+  }
+
 }
 

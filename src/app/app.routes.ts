@@ -32,8 +32,12 @@ export const routes: Routes = [
                 path: 'invoices',
                 loadComponent: () =>
                     import('./features/invoice/component/invoice-list/invoice-list/invoice-list')
+            },
+            {
+                path: 'invoices/:id',
+                loadComponent: () =>
+                    import('./features/invoice/component/invoice-details/invoice-details/invoice-details')
             }
-
         ]
     },
     { path: '**', redirectTo: '' }
