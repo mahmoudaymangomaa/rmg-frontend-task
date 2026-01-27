@@ -92,9 +92,13 @@
                                 </svg>
                             </div>
                             <input type="email" [value]="email()" (input)="onEmailChange($any($event.target).value)"
-                                placeholder="admin@test.com"
-                                [class]="'w-full pl-12 pr-4 py-3.5 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-100 ' + 
-                  (showEmailError() ? 'border-red-500 focus:border-red-500' : 'border-gray-200 focus:border-blue-500')" />
+                                placeholder="Enter your email" [class]="'w-full pl-12 pr-4 py-3.5 rounded-xl border-2 transition-all duration-200
+            focus:outline-none focus:ring-4 focus:ring-blue-100
+            placeholder-gray-400 placeholder-opacity-60 ' +
+            (showEmailError()
+              ? 'border-red-500 focus:border-red-500'
+              : 'border-gray-200 focus:border-blue-500')" />
+
                         </div>
                         @if (showEmailError()) {
                         <div class="flex items-center gap-1 mt-2 text-red-500 text-xs">
@@ -122,8 +126,11 @@
                             </div>
                             <input [type]="showPassword() ? 'text' : 'password'" [value]="password()"
                                 (input)="onPasswordChange($any($event.target).value)" (keypress)="onKeyPress($event)"
-                                placeholder="Enter your password"
-                                class="w-full pl-12 pr-12 py-3.5 rounded-xl border-2 border-gray-200 transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100" />
+                                placeholder="Enter your password" class="w-full pl-12 pr-12 py-3.5 rounded-xl border-2 border-gray-200
+         transition-all duration-200
+         focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100
+         placeholder-gray-400 placeholder-opacity-60" />
+
                             <button type="button" (click)="togglePasswordVisibility()"
                                 class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
                                 @if (showPassword()) {
