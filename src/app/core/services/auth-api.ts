@@ -13,7 +13,6 @@ export interface LoginResponse {
 @Injectable({ providedIn: 'root' })
 export class AuthApiService {
   private readonly http = inject(HttpClient);
-  // private readonly API_URL = 'http://localhost:3000';
   private readonly appConfig = inject(AppConfigService);
 
   login(email: string, password: string): Observable<LoginResponse> {

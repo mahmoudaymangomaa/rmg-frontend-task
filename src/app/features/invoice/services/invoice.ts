@@ -7,7 +7,6 @@ import { AppConfigService } from '../../../core/config/app-config.service';
 @Injectable({ providedIn: 'root' })
 export class InvoicesService {
   private readonly http = inject(HttpClient);
-  // private readonly API_URL = 'http://localhost:3000/invoices';
   private readonly appConfig = inject(AppConfigService);
 
   getAll(): Observable<Invoice[]> {
