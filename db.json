@@ -57,6 +57,31 @@
       "id": "6485",
       "email": "admin@test.com",
       "password": "123456"
+    },
+    {
+      "id": "c9ac",
+      "email": "admin@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "e9cb",
+      "email": "admin@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "74ef",
+      "email": "admin@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "236a",
+      "email": "admin@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "77ba",
+      "email": "admin@test.com",
+      "password": "123456"
     }
   ],
   "products": [
