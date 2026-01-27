@@ -1,9 +1,12 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { AppConfigService } from '../config/app-config.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const appConfig = inject(AppConfigService);
 
   // 🚫 Skip fake json-server requests
-  if (req.url.startsWith('http://localhost:3000')) {
+  if (req.url.startsWith(appConfig.baseURL)) {
     return next(req);
   }
 
