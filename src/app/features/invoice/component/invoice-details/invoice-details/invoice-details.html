@@ -1,84 +1,150 @@
-<div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-semibold">Invoice Details</h1>
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50/20 to-teal-50/30 p-4 md:p-8">
 
-    <div class="flex gap-3">
-        <a routerLink="/invoices" class="text-sm text-blue-600 hover:underline">
-            ← Back to Invoices
-        </a>
-
-        <button (click)="exportPDF()" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm" *ngIf="invoice()">
-            Export PDF
-        </button>
-    </div>
-</div>
-
-<!-- Error -->
-<div *ngIf="error()" class="bg-red-50 border border-red-200 text-red-600 p-4 rounded-lg mb-6">
-    {{ error() }}
-</div>
-
-<!-- Loading -->
-<div *ngIf="loading()" class="text-center py-10 text-gray-500">
-    Loading invoice...
-</div>
-
-<!-- Invoice PDF AREA -->
-<div *ngIf="!loading() && invoice()" id="invoice-pdf" class="bg-white rounded-xl shadow p-6">
-    <!-- Header -->
-    <div class="flex justify-between mb-6">
-        <div>
-            <h2 class="font-semibold text-lg">
-                {{ invoice()!.customerName }}
-            </h2>
-            <p class="text-sm text-gray-500">
-                {{ invoice()!.date | date:'medium' }}
-            </p>
+    <!-- Animated Background -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none opacity-20">
+        <div
+            class="absolute top-20 right-20 w-96 h-96 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob">
         </div>
-
-        <div class="text-right">
-            <p class="text-sm text-gray-500">Total</p>
-            <p class="text-xl font-bold">
-                {{ invoice()!.grandTotal }} EGP
-            </p>
+        <div
+            class="absolute bottom-20 left-20 w-96 h-96 bg-teal-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000">
         </div>
     </div>
 
-    <!-- Items -->
-    <table class="w-full text-sm mb-6">
-        <thead class="bg-gray-50 text-gray-600">
-            <tr>
-                <th class="text-left px-3 py-2">Item</th>
-                <th class="text-center">Qty</th>
-                <th class="text-center">Price</th>
-                <th class="text-center">Total</th>
-            </tr>
-        </thead>
+    <div class="relative z-10 max-w-6xl mx-auto">
+        <!-- Page Header -->
+        <div class="mb-10 animate-fade-in">
+            <div class="flex items-center gap-4 mb-2">
+                <div
+                    class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/40">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1
+                        class="text-4xl md:text-5xl font-black bg-gradient-to-r from-slate-900 via-emerald-900 to-teal-900 bg-clip-text text-transparent">
+                        Invoice Details
+                    </h1>
+                    <p class="text-slate-600 text-sm mt-1 font-medium">
+                        Review invoice information and items
+                    </p>
+                </div>
+            </div>
 
-        <tbody>
-            <tr *ngFor="let item of invoice()!.items" class="border-t">
-                <td class="px-3 py-2">{{ item.name }}</td>
-                <td class="text-center">{{ item.quantity }}</td>
-                <td class="text-center">{{ item.price }} EGP</td>
-                <td class="text-center font-medium">
-                    {{ item.total }} EGP
-                </td>
-            </tr>
-        </tbody>
-    </table>
+            <div class="flex gap-3 mt-6">
+                <button type="button" routerLink="/invoices" class="inline-flex items-center gap-2
+           px-5 py-2.5 rounded-xl
+           border-2 border-slate-300
+           font-bold text-sm text-slate-700
+           hover:bg-slate-100
+           transition">
+                    ← Back to Invoices
+                </button>
 
-    <!-- Summary -->
-    <div class="text-right space-y-1">
-        <p>
-            Subtotal:
-            <strong>{{ invoice()!.subtotal }} EGP</strong>
-        </p>
-        <p>
-            Tax:
-            <strong>{{ invoice()!.tax }} EGP</strong>
-        </p>
-        <p class="text-lg">
-            Grand Total:
-            <strong>{{ invoice()!.grandTotal }} EGP</strong>
-        </p>
+
+                <button *ngIf="invoice()" (click)="exportPDF()" class="px-6 py-2.5 rounded-xl font-bold text-sm text-white
+                           bg-gradient-to-r from-emerald-500 to-teal-600
+                           hover:from-emerald-600 hover:to-teal-700
+                           shadow-xl shadow-emerald-500/30 transition">
+                    Export PDF
+                </button>
+            </div>
+        </div>
+        <div *ngIf="error()"
+            class="mb-6 rounded-2xl bg-gradient-to-r from-red-50 to-rose-50 border-2 border-red-200 p-5 animate-shake">
+            <p class="text-red-700 font-semibold">{{ error() }}</p>
+        </div>
+
+        <div *ngIf="loading()" class="text-center py-20 text-slate-500 font-medium">
+            Loading invoice...
+        </div>
+        <div *ngIf="!loading() && invoice()" id="invoice-pdf"
+            class="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-emerald-100/50 overflow-hidden animate-slide-up">
+            <div class="p-6 md:p-8 border-b border-slate-200 flex flex-col md:flex-row justify-between gap-6">
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">
+                        Billed To
+                    </p>
+                    <h2 class="text-2xl font-bold text-slate-900">
+                        {{ invoice()!.customerName }}
+                    </h2>
+                    <p class="text-sm text-slate-500 mt-1">
+                        {{ invoice()!.date | date:'medium' }}
+                    </p>
+                </div>
+
+                <div class="text-right">
+                    <p class="text-xs font-bold uppercase tracking-widest text-slate-400">
+                        Grand Total
+                    </p>
+                    <p
+                        class="text-4xl font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                        {{ invoice()!.grandTotal }} EGP
+                    </p>
+                </div>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="overflow-x-auto rounded-xl border border-slate-200">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gradient-to-r from-slate-50 to-slate-100">
+                                <th
+                                    class="text-left px-4 py-4 text-xs font-bold uppercase tracking-wider text-slate-600">
+                                    Item</th>
+                                <th
+                                    class="text-center px-4 py-4 text-xs font-bold uppercase tracking-wider text-slate-600">
+                                    Qty</th>
+                                <th
+                                    class="text-right px-4 py-4 text-xs font-bold uppercase tracking-wider text-slate-600">
+                                    Price</th>
+                                <th
+                                    class="text-right px-4 py-4 text-xs font-bold uppercase tracking-wider text-slate-600">
+                                    Total</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="bg-white">
+                            <tr *ngFor="let item of invoice()!.items"
+                                class="border-b border-slate-100 hover:bg-slate-50 transition">
+                                <td class="px-4 py-4 font-semibold text-slate-900">
+                                    {{ item.name }}
+                                </td>
+                                <td class="px-4 py-4 text-center font-medium text-slate-600">
+                                    {{ item.quantity }}
+                                </td>
+                                <td class="px-4 py-4 text-right text-slate-600">
+                                    {{ item.price }} EGP
+                                </td>
+                                <td class="px-4 py-4 text-right font-bold text-slate-900">
+                                    {{ item.total }} EGP
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-6 md:p-8 border-t border-slate-200">
+                <div class="max-w-md ml-auto space-y-4">
+                    <div class="flex justify-between text-slate-600 font-semibold">
+                        <span>Subtotal</span>
+                        <span>{{ invoice()!.subtotal }} EGP</span>
+                    </div>
+
+                    <div class="flex justify-between text-slate-600 font-semibold">
+                        <span>Tax (14%)</span>
+                        <span>{{ invoice()!.tax }} EGP</span>
+                    </div>
+
+                    <div class="flex justify-between pt-3 border-t text-xl font-black">
+                        <span class="text-slate-800">Grand Total</span>
+                        <span class="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                            {{ invoice()!.grandTotal }} EGP
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
