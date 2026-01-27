@@ -10,14 +10,14 @@ export class AppConfigService {
 
   constructor(private http: HttpClient) { }
 
-    loadConfig() {
-      return firstValueFrom(this.http.get('/config.json'))
-        .then(config => {
-          this.config = config;
-        });
-    }
+  loadConfig() {
+    return firstValueFrom(this.http.get('/config.json'))
+      .then(config => {
+        this.config = config;
+      });
+  }
 
-    get baseURL() {
-      return this.config?.baseURL;
-    }
+  get baseURL() {
+    return this.config?.baseURL ?? '/';
+  }
 }
