@@ -9,6 +9,8 @@ import { ProductsService } from '../../../products/services/products';
 import { InvoicesService } from '../../services/invoice';
 import { Product } from '../../../products/model/product';
 import { Invoice, InvoiceItem } from '../../model/invoice';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   standalone: true,
@@ -20,6 +22,9 @@ import { Invoice, InvoiceItem } from '../../model/invoice';
 export default class InvoicesComponent {
   private readonly productsApi = inject(ProductsService);
   private readonly invoicesApi = inject(InvoicesService);
+  private readonly router = inject(Router);
+  private readonly toastr = inject(ToastrService);
+
 
   products = signal<Product[]>([]);
   items = signal<InvoiceItem[]>([]);
@@ -119,11 +124,27 @@ export default class InvoicesComponent {
       grandTotal: this.grandTotal,
     };
 
-    this.invoicesApi.create(invoice).subscribe(() => {
-      this.customerName.set('');
-      this.items.set([]);
-      this.error.set(null);
-      alert('Invoice created successfully');
+    this.invoicesApi.create(invoice).subscribe({
+      next: () => {
+        this.customerName.set('');
+        this.items.set([]);
+        this.error.set(null);
+
+        this.toastr.success(
+          'Invoice created successfully',
+          'Success'
+        );
+
+        // Redirect to invoices list
+        this.router.navigate(['/invoices']);
+      },
+      error: () => {
+        this.toastr.error(
+          'Failed to create invoice',
+          'Error'
+        );
+      },
     });
+
   }
 }

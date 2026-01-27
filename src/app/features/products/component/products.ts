@@ -7,6 +7,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { Product } from '../model/product';
 import { ProductsService } from '../services/products';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   standalone: true,
@@ -17,6 +18,7 @@ import { ProductsService } from '../services/products';
 })
 export default class ProductsComponent {
   private readonly api = inject(ProductsService);
+  private readonly toastr = inject(ToastrService);
 
   // =====================
   // STATE
@@ -32,6 +34,11 @@ export default class ProductsComponent {
   name = signal('');
   price = signal<number | null>(null);
   description = signal('');
+
+  // Confirmation popup state
+  confirmOpen = signal(false);
+  confirmId = signal<string | null>(null);
+  confirmAction = signal<'delete' | null>(null);
 
   // =====================
   // VALIDATION
@@ -99,12 +106,23 @@ export default class ProductsComponent {
 
     request$.subscribe({
       next: () => {
+        const isEdit = !!this.editingId();
+
         this.resetForm();
         this.load();
+
+        this.toastr.success(
+          isEdit ? 'Product updated successfully' : 'Product added successfully',
+          'Success'
+        );
       },
-      error: () => this.error.set('Failed to save product'),
+      error: () => {
+        this.toastr.error('Failed to save product', 'Error');
+        this.loading.set(false);
+      },
       complete: () => this.loading.set(false),
     });
+
   }
 
   // =====================
@@ -123,17 +141,37 @@ export default class ProductsComponent {
   // =====================
   // DELETE
   // =====================
-  remove(id: string): void { // ✅ string
-    if (!confirm('Delete this product?')) return;
+  openDeleteConfirm(id: string): void {
+    this.confirmId.set(id);
+    this.confirmAction.set('delete');
+    this.confirmOpen.set(true);
+  }
+
+  confirmDelete(): void {
+    const id = this.confirmId();
+    if (!id) return;
 
     this.loading.set(true);
+    this.confirmOpen.set(false);
 
     this.api.delete(id).subscribe({
-      next: () => this.load(),
-      error: () => this.error.set('Failed to delete product'),
-      complete: () => this.loading.set(false),
+      next: () => {
+        this.load();
+        this.toastr.success('Product deleted successfully', 'Deleted');
+      },
+      error: () => {
+        this.toastr.error('Failed to delete product', 'Error');
+        this.loading.set(false);
+      },
     });
   }
+
+  closeConfirm(): void {
+    this.confirmOpen.set(false);
+    this.confirmId.set(null);
+    this.confirmAction.set(null);
+  }
+
 
   // =====================
   // RESET
