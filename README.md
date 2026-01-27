@@ -6,6 +6,7 @@ The application simulates a complete workflow for:
 - Product Management
 - Invoice Creation & Management
 - Dashboard Analytics
+- PDF Export
 
 All data interactions are handled using a **Fake REST API (json-server)**.
 
@@ -14,99 +15,134 @@ All data interactions are handled using a **Fake REST API (json-server)**.
 ## 🚀 Live Features
 
 ### 🔐 Authentication
-- Login using fake API
-- Route protection using Auth Guard
-- Authenticated shell layout
+- Login using fake API (json-server)
+- Route protection using **Auth Guard**
+- Authenticated shell layout (Sidebar + Header)
+- Clean logout flow
 
 ---
 
-### 🛒 Products Module
-- Create / Read / Update / Delete products
+## 🛒 Products Module
+- Full **CRUD** operations:
+  - Create
+  - Read
+  - Update
+  - Delete
 - Strong validation:
-  - Name & description must contain readable text
+  - Product name must contain readable text
   - Prevent numbers-only or symbols-only values
+  - Description validation (optional but readable)
 - Clean UX:
   - Loading state
   - Empty state
   - Error handling
-- Built with **Angular Signals**
-- **OnPush Change Detection** for performance
+- Built using:
+  - **Angular Signals**
+  - **OnPush Change Detection** for performance
+- Fully compliant with Fake API (json-server)
 
 ---
 
-### 🧾 Invoices Module
+## 🧾 Invoices Module
 
-#### ➕ Create Invoice
+### ➕ Create Invoice
 - Select products dynamically
-- Adjust quantities
-- Automatic calculation:
+- Add the same product multiple times (quantity auto-increment)
+- Update quantities manually
+- Automatic calculations:
   - Subtotal
   - Tax (14%)
   - Grand Total
 - Validation:
-  - Customer name required
-  - At least one product required
-
-#### 📄 Invoices List
-- View all invoices
-- Delete invoice
-- Loading / Empty / Error states
-- Ready for invoice details view
+  - Customer name is required
+  - At least one product is required before saving
+- Invoice data persisted to fake API
 
 ---
 
-#### 📄 Invoice Details View
+### 📄 Invoices List
+- Fetch invoices from fake API
+- Display:
+  - Customer name
+  - Invoice date
+  - Items count
+  - Grand total
+- Delete invoice
+- Clean UX:
+  - Loading state
+  - Empty state
+  - Error handling
+- Navigation to Invoice Details page
 
-The Invoice Details page provides a complete, read-only view of a single invoice in a clean, professional layout similar to real accounting systems.
+---
 
-What this page displays:
+### 📄 Invoice Details View
 
-Navigation
+The **Invoice Details** page provides a complete, read-only view of a single invoice in a clean and professional layout similar to real accounting systems.
 
-Back button to return to the invoices list
+#### What this page includes:
 
-Improves user flow and usability
+**Navigation**
+- Back button to return to invoices list
+- Improves user flow and usability
 
-Invoice Header
+**Invoice Header**
+- Customer name
+- Invoice creation date & time
+- Clearly highlighted **Grand Total**
 
-Company / brand name
+**Invoice Items Table**
+- List of all products included in the invoice
+- Columns:
+  - Item name
+  - Quantity
+  - Unit price
+  - Line total
+- Values are calculated dynamically based on stored invoice data
 
-Invoice creation date and time
+**Financial Summary**
+- Subtotal (sum of all item totals)
+- Tax (14%)
+- Grand Total (Subtotal + Tax)
 
-Clearly highlighted Grand Total
+---
 
-Invoice Items Table
+## 📄 PDF Export (Implemented)
 
-List of all products included in the invoice
+The application supports **exporting invoice details as a PDF file**.
 
-Columns:
+### 🧠 Technical Decision
+Initially, `html2canvas` was evaluated, but it failed due to:
+- Incompatibility with modern CSS color functions such as `oklch` used by Tailwind CSS
+- Performance and rendering issues with computed styles
 
-Item name
+### ✅ Final Solution
+- Implemented **text-based PDF generation using jsPDF**
+- No DOM snapshotting
+- No CSS parsing
+- Full control over layout and performance
+- Stable and production-ready approach
 
-Quantity
-
-Unit price
-
-Line total
-
-Values are calculated dynamically based on stored invoice data
-
-Financial Summary
-
-Subtotal (sum of all item totals)
-
-Tax (14%)
-
-Grand Total (Subtotal + Tax)
+### 📌 PDF Export Features
+- Invoice header (customer name & date)
+- Items table
+- Subtotal, tax, and grand total
+- Automatically downloaded as:
 
 
-### 📊 Dashboard
-- Real statistics connected to fake API:
-  - Total Products
-  - Total Products Value
-  - Invoices overview
-- Professional charts using **Chart.js**
-- Direct navigation to Products & Invoices modules
+This approach reflects **real-world production practices** and avoids common pitfalls.
+
+---
+
+## 📊 Dashboard
+- Real-time statistics connected to fake API:
+- Total Products count
+- Total Products value
+- Invoices overview
+- Interactive and clean charts using **Chart.js**
+- Quick navigation to:
+- Products
+- Invoices
 
 ---
 
@@ -118,17 +154,23 @@ Grand Total (Subtotal + Tax)
 - **Tailwind CSS**
 - **Chart.js**
 - **RxJS**
-- **json-server (Fake API)**
+- **json-server (Fake REST API)**
 - **Angular Router + Guards**
+- **jsPDF**
 
 ---
 
-## ▶️ Getting Started (How to Run the Project)
+## 🧭 Routing Overview
 
-This project uses a **Fake REST API** instead of a real backend.  
-⚠️ **Both the Angular app and the fake API must be running**.
-
----
+```txt
+/
+├── login
+├── /
+│   ├── dashboard
+│   ├── products
+│   ├── invoice        (create)
+│   ├── invoices       (list)
+│   └── invoices/:id   (details)
 
 ### 1️⃣ Clone the repository
 ```bash
