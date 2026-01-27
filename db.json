@@ -169,6 +169,30 @@
       "subtotal": 1702,
       "tax": 238.28000000000003,
       "grandTotal": 1940.28
+    },
+    {
+      "id": "eea6",
+      "customerName": "New Invoice",
+      "date": "2026-01-27T09:43:42.654Z",
+      "items": [
+        {
+          "productId": "e268",
+          "name": "Rmg",
+          "price": 500,
+          "quantity": 2,
+          "total": 1000
+        },
+        {
+          "productId": "10d0",
+          "name": "rmg",
+          "price": 234,
+          "quantity": 1,
+          "total": 234
+        }
+      ],
+      "subtotal": 1234,
+      "tax": 172.76000000000002,
+      "grandTotal": 1406.76
     }
   ]
 }
