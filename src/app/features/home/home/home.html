@@ -54,13 +54,28 @@
             </a>
         </div>
 
-        <div class="h-40 flex items-center justify-center">
-            <canvas id="invoicesChart"></canvas>
-        </div>
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-500 text-sm mb-1">
+                    Total Invoices
+                </p>
+                <p class="text-xl font-bold">
+                    {{ invoicesCount() }}
+                </p>
 
-        <p class="text-xs text-gray-400 mt-4">
-            Create and manage your invoices
-        </p>
+                <p class="text-gray-500 text-sm mt-4">
+                    Total Revenue
+                </p>
+                <p class="font-semibold">
+                    {{ invoicesTotal() }} EGP
+                </p>
+            </div>
+
+            <div class="w-36 h-36">
+                <canvas id="invoicesChart"></canvas>
+            </div>
+        </div>
     </div>
+
 
 </div>

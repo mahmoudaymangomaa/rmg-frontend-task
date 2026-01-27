@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProductsService } from '../../products/services/products';
 import { Chart, registerables } from 'chart.js';
+import { InvoicesService } from '../../invoice/services/invoice';
 
 Chart.register(...registerables);
 
@@ -21,15 +22,20 @@ Chart.register(...registerables);
 })
 export default class HomeComponent implements AfterViewInit {
   private readonly productsApi = inject(ProductsService);
+  private readonly invoicesApi = inject(InvoicesService);
 
   productsCount = signal(0);
   productsTotal = signal(0);
+
+  invoicesCount = signal(0);
+  invoicesTotal = signal(0);
 
   private productsChart?: Chart;
   private invoicesChart?: Chart;
 
   ngAfterViewInit(): void {
     this.loadProductsStats();
+    this.loadInvoicesStats();
   }
 
   private loadProductsStats(): void {
@@ -41,6 +47,18 @@ export default class HomeComponent implements AfterViewInit {
       this.renderInvoicesChart();
     });
   }
+
+  private loadInvoicesStats(): void {
+    this.invoicesApi.getAll().subscribe(invoices => {
+      this.invoicesCount.set(invoices.length);
+      this.invoicesTotal.set(
+        invoices.reduce((s, i) => s + i.grandTotal, 0)
+      );
+
+      this.renderInvoicesChart();
+    });
+  }
+
 
   // =====================
   // PRODUCTS CHART
@@ -102,35 +120,50 @@ export default class HomeComponent implements AfterViewInit {
     this.invoicesChart?.destroy();
 
     this.invoicesChart = new Chart('invoicesChart', {
-      type: 'bar',
+      type: 'doughnut',
       data: {
         labels: ['Invoices'],
         datasets: [
           {
-            data: [0],
-            backgroundColor: '#d1d5db',
-            borderRadius: 8,
+            data: [this.invoicesCount()],
+            backgroundColor: ['#10b981'],
+            hoverBackgroundColor: ['#059669'],
+            borderWidth: 0,
           },
         ],
       },
       options: {
+        cutout: '70%',
         responsive: true,
         plugins: {
           legend: { display: false },
           tooltip: {
             callbacks: {
-              label: () => 'No invoices yet',
+              label: () =>
+                `${this.invoicesCount()} Invoices`,
             },
           },
         },
-        scales: {
-          x: { display: false },
-          y: {
-            display: false,
-            beginAtZero: true,
+      },
+      plugins: [
+        {
+          id: 'centerText',
+          afterDraw: chart => {
+            const { ctx } = chart;
+            ctx.save();
+            ctx.font = 'bold 18px sans-serif';
+            ctx.fillStyle = '#111827';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(
+              String(this.invoicesCount()),
+              chart.width / 2,
+              chart.height / 2
+            );
           },
         },
-      },
+      ],
     });
   }
+
 }
