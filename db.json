@@ -96,10 +96,10 @@
   ],
   "products": [
     {
-      "id": "e268",
       "name": "Rmg",
       "price": 500,
-      "description": "Rmg"
+      "description": "Rmg",
+      "id": "e268"
     },
     {
       "id": "10d0",
