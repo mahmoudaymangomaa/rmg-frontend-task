@@ -1,53 +1,129 @@
-<div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-semibold">Invoices</h1>
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+    <div>
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">
+            Invoices
+        </h1>
+        <p class="text-sm text-slate-500 mt-1">
+            Manage and review all customer invoices
+        </p>
+    </div>
 
-    <a routerLink="/invoice" class="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm hover:bg-blue-700">
+    <a routerLink="/invoice" style="text-decoration: none;" class="inline-flex items-center gap-2
+           px-5 py-2.5 rounded-xl
+           bg-emerald-600 text-white
+           text-sm font-bold
+           hover:bg-emerald-700
+           shadow-lg shadow-emerald-600/30
+           transition">
         + Create Invoice
     </a>
+
 </div>
 
 <!-- Error -->
-<div *ngIf="error()" class="mb-4 bg-red-50 border border-red-200 p-3 text-red-600 rounded">
+<div *ngIf="error()" class="mb-6 rounded-xl border border-red-200 bg-red-50
+            px-5 py-4 text-sm font-medium text-red-700">
     {{ error() }}
 </div>
 
 <!-- Loading -->
-<div *ngIf="loading()" class="text-center py-10 text-gray-500">
+<div *ngIf="loading()" class="flex items-center justify-center py-20 text-slate-500">
     Loading invoices...
 </div>
 
-<!-- Empty -->
-<div *ngIf="!loading() && invoices().length === 0" class="text-center py-16 text-gray-400">
-    <p class="text-lg font-medium">No invoices yet</p>
-    <p class="text-sm">Create your first invoice</p>
+<!-- Empty State -->
+<div *ngIf="!loading() && invoices().length === 0" class="text-center py-20">
+    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100
+                flex items-center justify-center">
+        <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+    </div>
+    <h3 class="text-lg font-bold text-slate-700">
+        No invoices yet
+    </h3>
+    <p class="text-sm text-slate-500 mt-1">
+        Create your first invoice to get started
+    </p>
 </div>
 
 <!-- Table -->
-<div *ngIf="!loading() && invoices().length" class="bg-white rounded-xl shadow overflow-x-auto">
+<div *ngIf="!loading() && invoices().length"
+    class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-x-auto">
+
     <table class="w-full text-sm">
-        <thead class="bg-gray-50 text-gray-600">
-            <tr>
-                <th class="text-left px-4 py-3">Customer</th>
-                <th>Date</th>
-                <th>Items</th>
-                <th>Total</th>
-                <th></th>
+        <thead class="bg-slate-50 border-b border-slate-200">
+            <tr class="text-slate-600 text-xs uppercase tracking-wider font-bold">
+                <th class="text-left px-6 py-4">Customer</th>
+                <th class="px-6 py-4">Date</th>
+                <th class="px-6 py-4">Items</th>
+                <th class="px-6 py-4">Total</th>
+                <th class="px-6 py-4 text-right">Actions</th>
             </tr>
         </thead>
 
         <tbody>
-            <tr *ngFor="let i of invoices()" class="border-t hover:bg-gray-50">
-                <td class="px-4 py-3 font-medium">{{ i.customerName }}</td>
-                <td>{{ i.date | date:'mediumDate' }}</td>
-                <td>{{ i.items.length }}</td>
-                <td class="font-semibold">{{ i.grandTotal }} EGP</td>
-                <td class="text-right px-4">
-                    <a [routerLink]="['/invoices', i.id]" class="text-blue-600 hover:underline text-sm mr-3">
-                        View
-                    </a>
-                    <button (click)="delete(i.id!)" class="text-red-600 hover:underline text-sm">
-                        Delete
-                    </button>
+            <tr *ngFor="let i of invoices()" class="border-b last:border-b-0 hover:bg-slate-50 transition
+                       [&>td]:py-5">
+
+                <!-- Customer -->
+                <td class="px-6 font-semibold text-slate-900">
+                    {{ i.customerName }}
+                </td>
+
+                <!-- Date -->
+                <td class="px-6 text-slate-600">
+                    {{ i.date | date:'mediumDate' }}
+                </td>
+
+                <!-- Items -->
+                <td class="px-6 text-center text-slate-600 font-medium">
+                    {{ i.items.length }}
+                </td>
+
+                <!-- Total -->
+                <td class="px-6 font-bold text-emerald-600">
+                    {{ i.grandTotal }} EGP
+                </td>
+
+                <!-- Actions -->
+                <td class="px-6">
+                    <div class="flex items-center justify-end gap-4">
+
+                        <!-- View -->
+                        <button [routerLink]="['/invoices', i.id]" type="button" class="inline-flex items-center gap-1.5
+                                   px-3 py-1.5 rounded-lg
+                                   text-sm font-semibold
+                                   text-blue-600
+                                   hover:bg-blue-50 hover:text-blue-700
+                                   transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12H9m6 0l-3-3m3 3l-3 3" />
+                            </svg>
+                            View
+                        </button>
+
+                        <!-- Divider -->
+                        <span class="h-5 w-px bg-slate-200"></span>
+
+                        <!-- Delete -->
+                        <button (click)="delete(i.id!)" type="button" class="inline-flex items-center gap-1.5
+                                   px-3 py-1.5 rounded-lg
+                                   text-sm font-semibold
+                                   text-red-600
+                                   hover:bg-red-50 hover:text-red-700
+                                   transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            Delete
+                        </button>
+
+                    </div>
                 </td>
             </tr>
         </tbody>
