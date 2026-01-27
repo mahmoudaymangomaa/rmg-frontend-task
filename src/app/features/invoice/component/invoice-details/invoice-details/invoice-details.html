@@ -42,24 +42,30 @@
                     ← Back to Invoices
                 </button>
 
-
-                <button *ngIf="invoice()" (click)="exportPDF()" class="px-6 py-2.5 rounded-xl font-bold text-sm text-white
+                @if (invoice()) {
+                <button (click)="exportPDF()" class="px-6 py-2.5 rounded-xl font-bold text-sm text-white
                            bg-gradient-to-r from-emerald-500 to-teal-600
                            hover:from-emerald-600 hover:to-teal-700
                            shadow-xl shadow-emerald-500/30 transition">
                     Export PDF
                 </button>
+                }
             </div>
         </div>
-        <div *ngIf="error()"
-            class="mb-6 rounded-2xl bg-gradient-to-r from-red-50 to-rose-50 border-2 border-red-200 p-5 animate-shake">
+
+        @if (error()) {
+        <div class="mb-6 rounded-2xl bg-gradient-to-r from-red-50 to-rose-50 border-2 border-red-200 p-5 animate-shake">
             <p class="text-red-700 font-semibold">{{ error() }}</p>
         </div>
+        }
 
-        <div *ngIf="loading()" class="text-center py-20 text-slate-500 font-medium">
+        @if (loading()) {
+        <div class="text-center py-20 text-slate-500 font-medium">
             Loading invoice...
         </div>
-        <div *ngIf="!loading() && invoice()" id="invoice-pdf"
+        }
+        @if (!loading() && invoice()) {
+        <div id="invoice-pdf"
             class="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-emerald-100/50 overflow-hidden animate-slide-up">
             <div class="p-6 md:p-8 border-b border-slate-200 flex flex-col md:flex-row justify-between gap-6">
                 <div>
@@ -105,8 +111,8 @@
                         </thead>
 
                         <tbody class="bg-white">
-                            <tr *ngFor="let item of invoice()!.items"
-                                class="border-b border-slate-100 hover:bg-slate-50 transition">
+                            @for (item of invoice()!.items; track $index) {
+                            <tr class="border-b border-slate-100 hover:bg-slate-50 transition">
                                 <td class="px-4 py-4 font-semibold text-slate-900">
                                     {{ item.name }}
                                 </td>
@@ -120,6 +126,7 @@
                                     {{ item.total }} EGP
                                 </td>
                             </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -145,6 +152,7 @@
                 </div>
             </div>
         </div>
+        }
 
     </div>
 </div>
