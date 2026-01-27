@@ -107,6 +107,11 @@
       "id": "2355",
       "email": "admin@test.com",
       "password": "123456"
+    },
+    {
+      "id": "1399",
+      "email": "admin@test.com",
+      "password": "123456"
     }
   ],
   "products": [
