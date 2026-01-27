@@ -82,6 +82,16 @@
       "id": "77ba",
       "email": "admin@test.com",
       "password": "123456"
+    },
+    {
+      "id": "01de",
+      "email": "admin@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "e981",
+      "email": "admin@test.com",
+      "password": "123456"
     }
   ],
   "products": [
