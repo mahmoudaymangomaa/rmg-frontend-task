@@ -62,11 +62,11 @@
     <table class="w-full text-sm">
         <thead class="bg-slate-50 border-b border-slate-200">
             <tr class="text-slate-600 text-xs uppercase tracking-wider font-bold">
-                <th class="text-left px-6 py-4">Customer</th>
+                <th class="text-center px-6 py-4">Customer</th>
                 <th class="px-6 py-4">Date</th>
                 <th class="px-6 py-4">Items</th>
                 <th class="px-6 py-4">Total</th>
-                <th class="px-6 py-4 text-right">Actions</th>
+                <th class="px-6 py-4 text-center">Actions</th>
             </tr>
         </thead>
 
@@ -76,7 +76,7 @@
                        [&>td]:py-5">
 
                 <!-- Customer -->
-                <td class="px-6 font-semibold text-slate-900">
+                <td class="text-center px-6 font-semibold text-slate-900">
                     {{ i.customerName }}
                 </td>
 
@@ -97,7 +97,7 @@
 
                 <!-- Actions -->
                 <td class="px-6">
-                    <div class="flex items-center justify-end gap-4">
+                    <div class="flex items-center justify-center gap-4">
 
                         <!-- View -->
                         <button [routerLink]="['/invoices', i.id]" type="button" class="inline-flex items-center gap-1.5
